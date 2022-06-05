@@ -301,5 +301,28 @@ namespace Mediatek86.modele
             }
         }
 
+        /// <summary>
+        /// Récupère tous les utilisateurs avec leur mot de passe et leur service
+        /// </summary>
+        /// <returns></returns>
+
+        public static List<Utilisateur> GetAllUtilisateurs()
+        {
+            List<Utilisateur> lesUtilisateurs = new List<Utilisateur>();
+            string req = "SELECT * FROM utilisateurs INNER JOIN services WHERE utilisateurs.id_service = services.id_service ORDER BY id_utilisateur ";
+
+            BddMySql curs = BddMySql.GetInstance(connectionString);
+            curs.ReqSelect(req, null);
+
+            while (curs.Read())
+            {
+                Utilisateur utilisateur = new Utilisateur((string)curs.Field("prenom"), (string)curs.Field("password"), (string)curs.Field("service"));
+                lesUtilisateurs.Add(utilisateur);
+            }
+            curs.Close();
+            return lesUtilisateurs;
+
+        }
+
     }
 }

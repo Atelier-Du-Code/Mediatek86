@@ -396,7 +396,7 @@ namespace Mediatek86.vue
             RemplirComboCategorie(controle.GetAllPublics(), bdgPublics, cbxLivresPublics);
             RemplirComboCategorie(controle.GetAllRayons(), bdgRayons, cbxLivresRayons);
             RemplirLivresListeComplete();
-            RemplirListeExemplairesLivresComplete(dgvLivresEtat);
+            //RemplirListeExemplairesLivresComplete(dgvLivresEtat);
         }
 
         /// <summary>
@@ -423,7 +423,7 @@ namespace Mediatek86.vue
 
         private void RemplirListeExemplairesLivresComplete()
         {
-            RemplirListeExemplairesLivres(exemplaires);
+            //RemplirListeExemplairesLivres(exemplaires);
         }
 
 

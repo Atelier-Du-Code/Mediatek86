@@ -2,7 +2,7 @@
 using Mediatek86.modele;
 using Mediatek86.metier;
 using Mediatek86.vue;
-
+using System.Windows.Forms;
 
 namespace Mediatek86.controleur
 {
@@ -14,14 +14,17 @@ namespace Mediatek86.controleur
         private readonly List<Categorie> lesRayons;
         private readonly List<Categorie> lesPublics;
         private readonly List<Categorie> lesGenres;
-        private readonly List<Exemplaire> lesExemplaireLivres;
+        //private readonly List<Exemplaire> lesExemplaireLivres;
+
+        private int lesDroits;
 
 
         /// <summary>
         /// Ouverture de la fenêtre
         /// </summary>
-        public Controle()
+        public Controle(int _lesDroits)
         {
+            lesDroits = _lesDroits;
             lesLivres = Dao.GetAllLivres();
             lesDvd = Dao.GetAllDvd();
             lesRevues = Dao.GetAllRevues();
@@ -29,7 +32,15 @@ namespace Mediatek86.controleur
             lesRayons = Dao.GetAllRayons();
             lesPublics = Dao.GetAllPublics();            
             FrmMediatek frmMediatek = new FrmMediatek(this);
+
+            if (lesDroits == 1)
+            {
+                MessageBox.Show("Vous avez les droits d'accès à la gestion des commandes des ouvrages");
+            }
+            
             frmMediatek.ShowDialog();
+
+            
         }       
 
         /// <summary>
