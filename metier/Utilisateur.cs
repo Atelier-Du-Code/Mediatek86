@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Mediatek86.metier
 {
+    /// <summary>
+    /// Classe publique Utilisateur
+    /// </summary>
     public class Utilisateur
     {
         
@@ -13,6 +16,12 @@ namespace Mediatek86.metier
         private readonly string service;
         private readonly string password;
 
+        /// <summary>
+        /// Constructeur de la classe
+        /// </summary>
+        /// <param name="prenom"></param>
+        /// <param name="password"></param>
+        /// <param name="service"></param>
         public Utilisateur(string prenom, string password, string service)
         {           
             this.prenom = prenom;
@@ -20,9 +29,19 @@ namespace Mediatek86.metier
             this.service = service;
         }
         
-        public string Prenom { get => prenom; }
+        /// <summary>
+        /// Getter sur le prénom
+        /// </summary>
+        public string GetPrenom { get => prenom; }
 
-        public string Password { get => password; }
-        public string Service { get => service; }
+        /// <summary>
+        /// Getter sur le mot de passe 
+        /// </summary>
+        public string GetPassword { get => password; }
+
+        /// <summary>
+        /// Getter sur le service
+        /// </summary>
+        public string GetService { get => service; }
     }
 }

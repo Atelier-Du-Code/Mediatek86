@@ -1,11 +1,13 @@
-﻿using Mediatek86.metier;
+﻿using System;
 using System.Collections.Generic;
 using Mediatek86.bdd;
-using System;
-using System.Windows.Forms;
+using Mediatek86.metier;
 
 namespace Mediatek86.modele
 {
+    /// <summary>
+    /// Classe publique Dao
+    /// </summary>
     public static class Dao
     {
 
@@ -13,7 +15,17 @@ namespace Mediatek86.modele
         private static readonly string userid = "root";
         private static readonly string password = "";
         private static readonly string database = "mediatek86";
-        private static readonly string connectionString = "server="+server+";user id="+userid+";password="+password+";database="+database+";SslMode=none";
+        private static readonly string connectionString = "server=" + server + ";user id=" + userid + ";password=" + password + ";database=" + database + ";SslMode=none";
+
+        /// <summary>
+        /// Titre du livre en cours d'utilisation
+        /// </summary>
+        public static string titreLivreCourant;
+
+        /// <summary>
+        /// ISBN du livre en cours d'utilisation
+        /// </summary>
+        public static string isbnLivreCourant;
 
         /// <summary>
         /// Retourne tous les genres à partir de la BDD
@@ -236,6 +248,11 @@ namespace Mediatek86.modele
             return lesExemplaires;
         }
 
+        /// <summary>
+        /// Getter sur tous les exemplaires d'un livre
+        /// </summary>
+        /// <param name="idDocument"></param>
+        /// <returns></returns>
         public static List<Exemplaire> GetAllExemplairesLivres(string idDocument)
         {
 
@@ -316,12 +333,112 @@ namespace Mediatek86.modele
 
             while (curs.Read())
             {
-                Utilisateur utilisateur = new Utilisateur((string)curs.Field("prenom"), (string)curs.Field("password"), (string)curs.Field("service"));
+                Utilisateur utilisateur = new Utilisateur((string)curs.Field("prenom"), 
+                    (string)curs.Field("password"), 
+                    (string)curs.Field("service"));
+
                 lesUtilisateurs.Add(utilisateur);
             }
             curs.Close();
             return lesUtilisateurs;
 
+        }
+        /// <summary>
+        /// Getter sur les commandes de livres
+        /// </summary>
+        /// <param name="idLivre"></param>
+        /// <returns></returns>
+        public static List<CommandeLivre> GetCommandeDeLivres(string idLivre)
+        {
+            List<CommandeLivre> lesCommandesLivres = new List<CommandeLivre>();
+
+
+            string req = "Select livre.ISBN, document.titre, commandedocument.nbExemplaire, suivi.etape_suivi, commande.dateCommande, commande.montant FROM livre ";
+            req += "JOIN document ON livre.id = document.id ";
+            req += "JOIN commandedocument ON livre.id = commandedocument.id_CommandeDocument ";
+            req += "JOIN suivi ON commandedocument.id_suivi = suivi.id_suivi ";
+            req += "JOIN commande ON commandedocument.id_CommandeDocument = commande.id ";
+            req += "WHERE livre.id = @id";            
+
+            Dictionary<string, object> parameters = new Dictionary<string, object>
+                {
+                    { "@id", idLivre}
+                };
+
+            BddMySql curs = BddMySql.GetInstance(connectionString);
+            curs.ReqSelect(req, parameters);
+
+            bool bPrem = true;
+
+            while (curs.Read())
+            {
+                if(bPrem)
+                {
+                    titreLivreCourant = (string)curs.Field("titre");
+                    isbnLivreCourant = (string)curs.Field("isbn");
+                    bPrem = false;
+                }
+                
+                DateTime date = (DateTime)curs.Field("dateCommande");
+                string id = idLivre;
+                double montant = (double)curs.Field("montant");
+                int nb = (int)curs.Field("nbExemplaire");
+                string suivi = (string)curs.Field("etape_suivi");
+
+                CommandeLivre commande = new CommandeLivre(id, date, montant ,nb ,suivi);
+                lesCommandesLivres.Add(commande);
+            }
+            curs.Close();            
+
+            return lesCommandesLivres; 
+        }
+        /// <summary>
+        /// Méthode permettant de récupèrer les etapes de suivi pour le comboBox
+        /// </summary>
+        /// <returns></returns>
+        public static List<EtapeSuivi> GetEtapeSuivi()
+        {
+            List<EtapeSuivi> lesEtapesSuivi = new List<EtapeSuivi>();
+
+            string req = "SELECT * FROM suivi";
+
+            BddMySql curs = BddMySql.GetInstance(connectionString);
+            curs.ReqSelect(req,null);
+
+
+            while (curs.Read())
+            {
+                int idSuivi = (int)curs.Field("id_suivi");
+                string etapeSuivi = (string)curs.Field("etape_suivi");
+
+                EtapeSuivi listeEtapes = new EtapeSuivi(idSuivi, etapeSuivi);
+                lesEtapesSuivi.Add(listeEtapes);
+            }
+            curs.Close();
+
+            return lesEtapesSuivi;
+        }
+
+        /// <summary>
+        /// Méthode qui update le suivi d'un livre dans la BDD
+        /// </summary>
+        /// <param name="idLivre"></param>
+        /// <param name="indexSuivi"></param>
+        public static void ChangeLeSuivi(string idLivre, int indexSuivi)
+        {
+            string req = "UPDATE commandedocument JOIN livres_dvd ON livres_dvd.id = commandedocument.id_CommandeDocument ";
+                   req += "SET commandedocument.id_suivi = @indexSuivi ";
+                   req += "WHERE livres_dvd.id = @idLivre";
+            
+            Dictionary<string, object> parameters = new Dictionary<string, object>
+                {
+                    { "@idLivre", idLivre},
+                    { "@indexSuivi", indexSuivi}
+                };
+
+            BddMySql curs = BddMySql.GetInstance(connectionString);
+            curs.ReqSelect(req, parameters);      
+            curs.Close();            
         }
 
     }

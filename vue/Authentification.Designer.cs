@@ -39,9 +39,10 @@ namespace Mediatek86.vue
             // 
             // btnConnexion
             // 
-            this.btnConnexion.Location = new System.Drawing.Point(279, 295);
+            this.btnConnexion.Font = new System.Drawing.Font("Microsoft JhengHei UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnConnexion.Location = new System.Drawing.Point(201, 439);
             this.btnConnexion.Name = "btnConnexion";
-            this.btnConnexion.Size = new System.Drawing.Size(125, 36);
+            this.btnConnexion.Size = new System.Drawing.Size(247, 35);
             this.btnConnexion.TabIndex = 0;
             this.btnConnexion.Text = "Se connecter";
             this.btnConnexion.UseVisualStyleBackColor = true;
@@ -49,46 +50,53 @@ namespace Mediatek86.vue
             // 
             // txtbPassword
             // 
-            this.txtbPassword.Location = new System.Drawing.Point(383, 153);
+            this.txtbPassword.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtbPassword.Font = new System.Drawing.Font("Microsoft YaHei Light", 12F);
+            this.txtbPassword.Location = new System.Drawing.Point(201, 367);
             this.txtbPassword.Name = "txtbPassword";
-            this.txtbPassword.Size = new System.Drawing.Size(215, 22);
+            this.txtbPassword.Size = new System.Drawing.Size(247, 27);
             this.txtbPassword.TabIndex = 2;
             // 
             // lblTitre
             // 
             this.lblTitre.AutoSize = true;
-            this.lblTitre.Location = new System.Drawing.Point(169, 57);
+            this.lblTitre.Font = new System.Drawing.Font("Microsoft JhengHei UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitre.Location = new System.Drawing.Point(149, 63);
             this.lblTitre.Name = "lblTitre";
-            this.lblTitre.Size = new System.Drawing.Size(302, 17);
+            this.lblTitre.Size = new System.Drawing.Size(345, 30);
             this.lblTitre.TabIndex = 3;
-            this.lblTitre.Text = "Authentification espace de gestion Médiatek86";
+            this.lblTitre.Text = "Authentification Médiatek86";
             // 
             // lblLogin
             // 
             this.lblLogin.AutoSize = true;
-            this.lblLogin.Location = new System.Drawing.Point(131, 115);
+            this.lblLogin.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold);
+            this.lblLogin.Location = new System.Drawing.Point(281, 131);
             this.lblLogin.Name = "lblLogin";
-            this.lblLogin.Size = new System.Drawing.Size(43, 17);
+            this.lblLogin.Size = new System.Drawing.Size(67, 25);
             this.lblLogin.TabIndex = 4;
             this.lblLogin.Text = "Login";
             // 
             // lblPassword
             // 
             this.lblPassword.AutoSize = true;
-            this.lblPassword.Location = new System.Drawing.Point(454, 115);
+            this.lblPassword.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold);
+            this.lblPassword.Location = new System.Drawing.Point(269, 339);
             this.lblPassword.Name = "lblPassword";
-            this.lblPassword.Size = new System.Drawing.Size(69, 17);
+            this.lblPassword.Size = new System.Drawing.Size(104, 25);
             this.lblPassword.TabIndex = 5;
             this.lblPassword.Text = "Password";
             // 
             // lstBoxLogin
             // 
             this.lstBoxLogin.AccessibleName = "lbxLogin";
+            this.lstBoxLogin.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lstBoxLogin.Font = new System.Drawing.Font("Microsoft JhengHei UI Light", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lstBoxLogin.FormattingEnabled = true;
-            this.lstBoxLogin.ItemHeight = 16;
-            this.lstBoxLogin.Location = new System.Drawing.Point(42, 153);
+            this.lstBoxLogin.ItemHeight = 29;
+            this.lstBoxLogin.Location = new System.Drawing.Point(201, 171);
             this.lstBoxLogin.Name = "lstBoxLogin";
-            this.lstBoxLogin.Size = new System.Drawing.Size(246, 68);
+            this.lstBoxLogin.Size = new System.Drawing.Size(247, 116);
             this.lstBoxLogin.Sorted = true;
             this.lstBoxLogin.TabIndex = 6;
             // 
@@ -97,7 +105,7 @@ namespace Mediatek86.vue
             this.AcceptButton = this.btnConnexion;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(667, 370);
+            this.ClientSize = new System.Drawing.Size(684, 545);
             this.Controls.Add(this.lstBoxLogin);
             this.Controls.Add(this.lblPassword);
             this.Controls.Add(this.lblLogin);
@@ -105,7 +113,7 @@ namespace Mediatek86.vue
             this.Controls.Add(this.txtbPassword);
             this.Controls.Add(this.btnConnexion);
             this.Name = "Authentification";
-            this.Text = "Authentification";
+            this.Text = "Authentification du gestionnaire de ressources ";
             this.ResumeLayout(false);
             this.PerformLayout();
 

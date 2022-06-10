@@ -29,6 +29,7 @@ namespace Mediatek86.vue
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tabOngletsApplication = new System.Windows.Forms.TabControl();
             this.tabLivres = new System.Windows.Forms.TabPage();
             this.dgvLivresEtat = new System.Windows.Forms.DataGridView();
@@ -179,6 +180,25 @@ namespace Mediatek86.vue
             this.label55 = new System.Windows.Forms.Label();
             this.btnReceptionRechercher = new System.Windows.Forms.Button();
             this.tabCommandesLivres = new System.Windows.Forms.TabPage();
+            this.btnValider = new System.Windows.Forms.Button();
+            this.lblCboSuivi = new System.Windows.Forms.Label();
+            this.lblTitre = new System.Windows.Forms.Label();
+            this.cboSuivi = new System.Windows.Forms.ComboBox();
+            this.dgvCommandesLivres = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dateCommande = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nbExemplaires = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.montant = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.suivi = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.txtbIsbn = new System.Windows.Forms.TextBox();
+            this.lblIsbn = new System.Windows.Forms.Label();
+            this.txtbTitreLivre = new System.Windows.Forms.TextBox();
+            this.lblTitreLivre = new System.Windows.Forms.Label();
+            this.txtbRefLivre = new System.Windows.Forms.TextBox();
+            this.lblRefLivre = new System.Windows.Forms.Label();
+            this.mediatek86DataSet = new Mediatek86.mediatek86DataSet();
+            this.mediatek86DataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.mediatek86DataSetBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.tabOngletsApplication.SuspendLayout();
             this.tabLivres.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLivresEtat)).BeginInit();
@@ -203,6 +223,11 @@ namespace Mediatek86.vue
             ((System.ComponentModel.ISupportInitialize)(this.pcbReceptionExemplaireRevueImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvReceptionExemplairesListe)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pcbReceptionRevueImage)).BeginInit();
+            this.tabCommandesLivres.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCommandesLivres)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mediatek86DataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mediatek86DataSetBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mediatek86DataSetBindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabOngletsApplication
@@ -643,7 +668,6 @@ namespace Mediatek86.vue
             this.dgvLivresListe.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvLivresListe.Size = new System.Drawing.Size(1125, 246);
             this.dgvLivresListe.TabIndex = 4;
-            this.dgvLivresListe.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvLivresListe_CellContentClick);
             this.dgvLivresListe.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvLivresListe_ColumnHeaderMouseClick);
             this.dgvLivresListe.SelectionChanged += new System.EventHandler(this.DgvLivresListe_SelectionChanged);
             // 
@@ -1944,12 +1968,196 @@ namespace Mediatek86.vue
             // 
             // tabCommandesLivres
             // 
+            this.tabCommandesLivres.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabCommandesLivres.Controls.Add(this.btnValider);
+            this.tabCommandesLivres.Controls.Add(this.lblCboSuivi);
+            this.tabCommandesLivres.Controls.Add(this.lblTitre);
+            this.tabCommandesLivres.Controls.Add(this.cboSuivi);
+            this.tabCommandesLivres.Controls.Add(this.dgvCommandesLivres);
+            this.tabCommandesLivres.Controls.Add(this.txtbIsbn);
+            this.tabCommandesLivres.Controls.Add(this.lblIsbn);
+            this.tabCommandesLivres.Controls.Add(this.txtbTitreLivre);
+            this.tabCommandesLivres.Controls.Add(this.lblTitreLivre);
+            this.tabCommandesLivres.Controls.Add(this.txtbRefLivre);
+            this.tabCommandesLivres.Controls.Add(this.lblRefLivre);
             this.tabCommandesLivres.Location = new System.Drawing.Point(4, 22);
             this.tabCommandesLivres.Name = "tabCommandesLivres";
             this.tabCommandesLivres.Size = new System.Drawing.Size(1183, 996);
             this.tabCommandesLivres.TabIndex = 5;
             this.tabCommandesLivres.Text = "Commandes livres";
-            this.tabCommandesLivres.UseVisualStyleBackColor = true;
+            // 
+            // btnValider
+            // 
+            this.btnValider.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold);
+            this.btnValider.Location = new System.Drawing.Point(822, 506);
+            this.btnValider.Name = "btnValider";
+            this.btnValider.Size = new System.Drawing.Size(121, 33);
+            this.btnValider.TabIndex = 10;
+            this.btnValider.Text = "Valider";
+            this.btnValider.UseVisualStyleBackColor = true;
+            this.btnValider.Click += new System.EventHandler(this.btnValider_Click);
+            // 
+            // lblCboSuivi
+            // 
+            this.lblCboSuivi.AutoSize = true;
+            this.lblCboSuivi.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold);
+            this.lblCboSuivi.Location = new System.Drawing.Point(817, 434);
+            this.lblCboSuivi.Name = "lblCboSuivi";
+            this.lblCboSuivi.Size = new System.Drawing.Size(290, 25);
+            this.lblCboSuivi.TabIndex = 9;
+            this.lblCboSuivi.Text = "Etat de suivi des commandes";
+            // 
+            // lblTitre
+            // 
+            this.lblTitre.AutoSize = true;
+            this.lblTitre.Font = new System.Drawing.Font("Microsoft JhengHei UI", 16F, System.Drawing.FontStyle.Bold);
+            this.lblTitre.Location = new System.Drawing.Point(347, 45);
+            this.lblTitre.Name = "lblTitre";
+            this.lblTitre.Size = new System.Drawing.Size(503, 35);
+            this.lblTitre.TabIndex = 8;
+            this.lblTitre.Text = "Gestionnaire de suivi des commandes";
+            // 
+            // cboSuivi
+            // 
+            this.cboSuivi.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboSuivi.FormattingEnabled = true;
+            this.cboSuivi.Location = new System.Drawing.Point(822, 462);
+            this.cboSuivi.Name = "cboSuivi";
+            this.cboSuivi.Size = new System.Drawing.Size(121, 24);
+            this.cboSuivi.TabIndex = 7;
+            // 
+            // dgvCommandesLivres
+            // 
+            this.dgvCommandesLivres.AllowUserToAddRows = false;
+            this.dgvCommandesLivres.AllowUserToDeleteRows = false;
+            this.dgvCommandesLivres.AllowUserToOrderColumns = true;
+            this.dgvCommandesLivres.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCommandesLivres.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
+            this.dateCommande,
+            this.nbExemplaires,
+            this.montant,
+            this.suivi});
+            this.dgvCommandesLivres.Location = new System.Drawing.Point(42, 155);
+            this.dgvCommandesLivres.Name = "dgvCommandesLivres";
+            this.dgvCommandesLivres.ReadOnly = true;
+            this.dgvCommandesLivres.RowHeadersWidth = 51;
+            this.dgvCommandesLivres.RowTemplate.Height = 24;
+            this.dgvCommandesLivres.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.dgvCommandesLivres.Size = new System.Drawing.Size(698, 399);
+            this.dgvCommandesLivres.TabIndex = 6;
+            this.dgvCommandesLivres.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCommandesLivres_CellContentClick);
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Référence du livre";
+            this.Column1.MinimumWidth = 6;
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Width = 125;
+            // 
+            // dateCommande
+            // 
+            this.dateCommande.HeaderText = "Date de la commande";
+            this.dateCommande.MinimumWidth = 6;
+            this.dateCommande.Name = "dateCommande";
+            this.dateCommande.ReadOnly = true;
+            this.dateCommande.Width = 125;
+            // 
+            // nbExemplaires
+            // 
+            this.nbExemplaires.HeaderText = "Nombre d\'exemplaire(s)";
+            this.nbExemplaires.MinimumWidth = 6;
+            this.nbExemplaires.Name = "nbExemplaires";
+            this.nbExemplaires.ReadOnly = true;
+            this.nbExemplaires.Width = 125;
+            // 
+            // montant
+            // 
+            this.montant.HeaderText = "Prix unitaire";
+            this.montant.MinimumWidth = 6;
+            this.montant.Name = "montant";
+            this.montant.ReadOnly = true;
+            this.montant.Width = 125;
+            // 
+            // suivi
+            // 
+            this.suivi.HeaderText = "Suivi";
+            this.suivi.MinimumWidth = 6;
+            this.suivi.Name = "suivi";
+            this.suivi.ReadOnly = true;
+            this.suivi.Width = 125;
+            // 
+            // txtbIsbn
+            // 
+            this.txtbIsbn.Font = new System.Drawing.Font("Microsoft YaHei Light", 12F);
+            this.txtbIsbn.Location = new System.Drawing.Point(816, 336);
+            this.txtbIsbn.Name = "txtbIsbn";
+            this.txtbIsbn.Size = new System.Drawing.Size(165, 34);
+            this.txtbIsbn.TabIndex = 5;
+            // 
+            // lblIsbn
+            // 
+            this.lblIsbn.AutoSize = true;
+            this.lblIsbn.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold);
+            this.lblIsbn.Location = new System.Drawing.Point(817, 308);
+            this.lblIsbn.Name = "lblIsbn";
+            this.lblIsbn.Size = new System.Drawing.Size(59, 25);
+            this.lblIsbn.TabIndex = 4;
+            this.lblIsbn.Text = "ISBN";
+            // 
+            // txtbTitreLivre
+            // 
+            this.txtbTitreLivre.Font = new System.Drawing.Font("Microsoft YaHei Light", 12F);
+            this.txtbTitreLivre.Location = new System.Drawing.Point(816, 248);
+            this.txtbTitreLivre.Name = "txtbTitreLivre";
+            this.txtbTitreLivre.Size = new System.Drawing.Size(292, 34);
+            this.txtbTitreLivre.TabIndex = 3;
+            // 
+            // lblTitreLivre
+            // 
+            this.lblTitreLivre.AutoSize = true;
+            this.lblTitreLivre.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold);
+            this.lblTitreLivre.Location = new System.Drawing.Point(816, 220);
+            this.lblTitreLivre.Name = "lblTitreLivre";
+            this.lblTitreLivre.Size = new System.Drawing.Size(135, 25);
+            this.lblTitreLivre.TabIndex = 2;
+            this.lblTitreLivre.Text = "Titre du livre";
+            // 
+            // txtbRefLivre
+            // 
+            this.txtbRefLivre.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.txtbRefLivre.Font = new System.Drawing.Font("Microsoft YaHei Light", 12F);
+            this.txtbRefLivre.Location = new System.Drawing.Point(816, 169);
+            this.txtbRefLivre.Name = "txtbRefLivre";
+            this.txtbRefLivre.Size = new System.Drawing.Size(135, 34);
+            this.txtbRefLivre.TabIndex = 1;
+            this.txtbRefLivre.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtbRefLivre_KeyDown);
+            // 
+            // lblRefLivre
+            // 
+            this.lblRefLivre.AutoSize = true;
+            this.lblRefLivre.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Bold);
+            this.lblRefLivre.Location = new System.Drawing.Point(811, 141);
+            this.lblRefLivre.Name = "lblRefLivre";
+            this.lblRefLivre.Size = new System.Drawing.Size(154, 25);
+            this.lblRefLivre.TabIndex = 0;
+            this.lblRefLivre.Text = "Référence livre";
+            // 
+            // mediatek86DataSet
+            // 
+            this.mediatek86DataSet.DataSetName = "mediatek86DataSet";
+            this.mediatek86DataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // mediatek86DataSetBindingSource
+            // 
+            this.mediatek86DataSetBindingSource.DataSource = this.mediatek86DataSet;
+            this.mediatek86DataSetBindingSource.Position = 0;
+            // 
+            // mediatek86DataSetBindingSource1
+            // 
+            this.mediatek86DataSetBindingSource1.DataSource = this.mediatek86DataSet;
+            this.mediatek86DataSetBindingSource1.Position = 0;
             // 
             // FrmMediatek
             // 
@@ -1994,6 +2202,12 @@ namespace Mediatek86.vue
             ((System.ComponentModel.ISupportInitialize)(this.pcbReceptionExemplaireRevueImage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvReceptionExemplairesListe)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pcbReceptionRevueImage)).EndInit();
+            this.tabCommandesLivres.ResumeLayout(false);
+            this.tabCommandesLivres.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCommandesLivres)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mediatek86DataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mediatek86DataSetBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mediatek86DataSetBindingSource1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2150,6 +2364,25 @@ namespace Mediatek86.vue
         private System.Windows.Forms.Label label56;
         private System.Windows.Forms.DataGridView dgvLivresEtat;
         private System.Windows.Forms.TabPage tabCommandesLivres;
+        private System.Windows.Forms.TextBox txtbIsbn;
+        private System.Windows.Forms.Label lblIsbn;
+        private System.Windows.Forms.TextBox txtbTitreLivre;
+        private System.Windows.Forms.Label lblTitreLivre;
+        private System.Windows.Forms.TextBox txtbRefLivre;
+        private System.Windows.Forms.Label lblRefLivre;
+        private System.Windows.Forms.DataGridView dgvCommandesLivres;
+        private System.Windows.Forms.BindingSource mediatek86DataSetBindingSource;
+        private mediatek86DataSet mediatek86DataSet;
+        private System.Windows.Forms.BindingSource mediatek86DataSetBindingSource1;
+        private System.Windows.Forms.Label lblCboSuivi;
+        private System.Windows.Forms.Label lblTitre;
+        private System.Windows.Forms.ComboBox cboSuivi;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dateCommande;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nbExemplaires;
+        private System.Windows.Forms.DataGridViewTextBoxColumn montant;
+        private System.Windows.Forms.DataGridViewTextBoxColumn suivi;
+        private System.Windows.Forms.Button btnValider;
     }
 }
 

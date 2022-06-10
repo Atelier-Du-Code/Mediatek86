@@ -1,13 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
+﻿using Mediatek86.controleur;
 using Mediatek86.metier;
-using Mediatek86.controleur;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace Mediatek86.vue
 {
+    /// <summary>
+    /// Classe partielle héritant de Form
+    /// </summary>
     public partial class FrmMediatek : Form
     {
 
@@ -15,7 +18,7 @@ namespace Mediatek86.vue
 
         private readonly Controle controle;
         const string ETATNEUF = "00001";
-
+        
         private readonly BindingSource bdgLivresListe = new BindingSource();
         private readonly BindingSource bdgDvdListe = new BindingSource();
         private readonly BindingSource bdgGenres = new BindingSource();
@@ -23,11 +26,15 @@ namespace Mediatek86.vue
         private readonly BindingSource bdgRayons = new BindingSource();
         private readonly BindingSource bdgRevuesListe = new BindingSource();
         private readonly BindingSource bdgExemplairesListe = new BindingSource();
+       
         private List<Livre> lesLivres = new List<Livre>();
         private List<Dvd> lesDvd = new List<Dvd>();
         private List<Revue> lesRevues = new List<Revue>();
         private List<Exemplaire> lesExemplaires = new List<Exemplaire>();
+        private List<CommandeLivre> lesCommandesDeLivre = new List<CommandeLivre>();
+        private List<EtapeSuivi> lesEtapesDeSuivi = new List<EtapeSuivi>();
 
+        private int ligneCouranteCommandeLivre;
         #endregion
 
 
@@ -35,6 +42,14 @@ namespace Mediatek86.vue
         {
             InitializeComponent();
             this.controle = controle;
+            if (this.controle.lesDroits != 1)
+            {
+                tabOngletsApplication.TabPages.Remove(tabOngletsApplication.TabPages[4]);               
+            }
+            else
+            {
+                RemplirComboSuivi();
+            }
         }
 
 
@@ -395,8 +410,7 @@ namespace Mediatek86.vue
             RemplirComboCategorie(controle.GetAllGenres(), bdgGenres, cbxLivresGenres);
             RemplirComboCategorie(controle.GetAllPublics(), bdgPublics, cbxLivresPublics);
             RemplirComboCategorie(controle.GetAllRayons(), bdgRayons, cbxLivresRayons);
-            RemplirLivresListeComplete();
-            //RemplirListeExemplairesLivresComplete(dgvLivresEtat);
+            RemplirLivresListeComplete();            
         }
 
         /// <summary>
@@ -415,17 +429,6 @@ namespace Mediatek86.vue
             dgvLivresListe.Columns["id"].DisplayIndex = 0;
             dgvLivresListe.Columns["titre"].DisplayIndex = 1;
         }
-        
-        private void RemplirListeExemplairesLivres(List<Exemplaire> exemplaires)
-        {
-            dgvLivresEtat.Columns["Titre"].Visible = true;
-        }
-
-        private void RemplirListeExemplairesLivresComplete()
-        {
-            //RemplirListeExemplairesLivres(exemplaires);
-        }
-
 
         /// <summary>
         /// Recherche et affichage du livre dont on a saisi le numéro.
@@ -1325,10 +1328,126 @@ namespace Mediatek86.vue
 
         #endregion
 
-        private void dgvLivresListe_CellContentClick(object sender, DataGridViewCellEventArgs e)
+      
+        private void txtbRefLivre_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.KeyCode == Keys.Enter)
+            {
+                lesCommandesDeLivre = controle.GetCommandeLivres(txtbRefLivre.Text);
 
+                txtbTitreLivre.Text = controle.GetTitreLivreCourant();
+                txtbIsbn.Text = controle.GetIsbnLivreCourant();
+
+                RemplirCommandeLivreListe();
+
+            }
         }
+
+        /// <summary>
+        /// Méthode permettant le remplissage du datagridview des commandes 
+        /// </summary>
+        public void RemplirCommandeLivreListe()
+        {
+            dgvCommandesLivres.Rows.Clear();
+            for (int i = 0; i < lesCommandesDeLivre.Count; i++)
+            {
+                dgvCommandesLivres.Rows.Add();
+                dgvCommandesLivres.Rows[i].Cells[0].Value = lesCommandesDeLivre[i].IdLivre();
+                dgvCommandesLivres.Rows[i].Cells[1].Value = lesCommandesDeLivre[i].DateDeCommande();
+                dgvCommandesLivres.Rows[i].Cells[2].Value = lesCommandesDeLivre[i].NbExemplaires();
+                dgvCommandesLivres.Rows[i].Cells[3].Value = lesCommandesDeLivre[i].Montant();
+                dgvCommandesLivres.Rows[i].Cells[4].Value = lesCommandesDeLivre[i].Suivi();
+            }
+
+            dgvCommandesLivres.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+
+            cboSuivi.Visible = false;
+            lblCboSuivi.Visible = false;
+            btnValider.Visible = false;            
+        }      
+
+        /// <summary>
+        /// Fait apparaitre l'onglet de gestion de l'état de suivi des commandes
+        /// </summary>
+        public void ShowCommandeLivre()
+        {
+            tabCommandesLivres.Show();
+        }
+
+        /// <summary>
+        /// Fait disparaître l'onglet de gestion de l'état de suivi des commandes
+        /// </summary>
+        public void HideCommandeLivre()
+        {
+            tabCommandesLivres.Hide();
+        }
+
+        /// <summary>
+        /// Méthode qui remplit cboSuivi
+        /// </summary>
+        public void RemplirComboSuivi()
+        {
+            lesEtapesDeSuivi = controle.GetLesEtapesSuivis();           
+
+            cboSuivi.Items.Clear();
+            cboSuivi.Visible = false;
+            lblCboSuivi.Visible = false;
+
+            for ( int i = 0; i < lesEtapesDeSuivi.Count; i++)
+            {
+                cboSuivi.Items.Add(lesEtapesDeSuivi[i].EtapeDeSuivi());                
+            }     
+            
+        }
+
+        /// <summary>
+        /// Méthode qui permet de récupérer l'index de l'élément du combo qui a été sélectionné
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgvCommandesLivres_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if(dgvCommandesLivres[e.RowIndex, e.ColumnIndex] == dgvCommandesLivres[0,0])
+            {
+                cboSuivi.Visible = true;
+                lblCboSuivi.Visible = true;
+                btnValider.Visible = true;
                 
+
+                ligneCouranteCommandeLivre = e.RowIndex;
+                string etat = dgvCommandesLivres.Rows[ligneCouranteCommandeLivre].Cells[4].Value.ToString();
+                
+
+                int numEtatDansCombo = cboSuivi.FindStringExact(etat);
+                cboSuivi.SelectedIndex = numEtatDansCombo;
+            }
+            
+
+            
+        }
+        private void btnValider_Click(object sender, EventArgs e)
+        {
+            if (cboSuivi.SelectedIndex > -1)
+            {
+                
+                string refLivre = txtbRefLivre.Text;
+                int etapeDuSuivi = cboSuivi.SelectedIndex + 1;
+
+                dgvCommandesLivres.Rows[ligneCouranteCommandeLivre].Cells[4].Value = cboSuivi.SelectedItem.ToString();
+       
+
+                controle.ChangeLeSuivi(refLivre, etapeDuSuivi);
+            }
+            else
+            {
+                MessageBox.Show("Veuillez selectionner un élément dans la liste avant de valider.");
+            }
+        }
+
+        private void btnActualiser_Click(object sender, EventArgs e)
+        {
+            dgvCommandesLivres.Rows.Clear();
+            RemplirCommandeLivreListe();
+        }
     }
 }

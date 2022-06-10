@@ -14,9 +14,8 @@ namespace Mediatek86.controleur
         private readonly List<Categorie> lesRayons;
         private readonly List<Categorie> lesPublics;
         private readonly List<Categorie> lesGenres;
-        //private readonly List<Exemplaire> lesExemplaireLivres;
 
-        private int lesDroits;
+        public int lesDroits;
 
 
         /// <summary>
@@ -33,16 +32,10 @@ namespace Mediatek86.controleur
             lesPublics = Dao.GetAllPublics();            
             FrmMediatek frmMediatek = new FrmMediatek(this);
 
-            if (lesDroits == 1)
-            {
-                MessageBox.Show("Vous avez les droits d'accès à la gestion des commandes des ouvrages");
-            }
-            
             frmMediatek.ShowDialog();
-
-            
+                         
         }       
-
+        
         /// <summary>
         /// getter sur la liste des genres
         /// </summary>
@@ -106,10 +99,16 @@ namespace Mediatek86.controleur
             return Dao.GetExemplairesRevue(idDocuement);
         }
 
+        /// <summary>
+        /// Getter sur la liste des exemplaires d'un livre
+        /// </summary>
+        /// <param name="idDoc"></param>
+        /// <returns></returns>
         public List<Exemplaire> GetExemplairesLivres(string idDoc)
         {
             return Dao.GetAllExemplairesLivres(idDoc);
         }
+
         /// <summary>
         /// Crée un exemplaire d'une revue dans la bdd
         /// </summary>
@@ -120,7 +119,52 @@ namespace Mediatek86.controleur
             return Dao.CreerExemplaire(exemplaire);
         }
 
-    }
+        /// <summary>
+        /// Getter sur les commandes d'un livre
+        /// </summary>
+        /// <param name="idLivre"></param>
+        /// <returns></returns>
+        public List<CommandeLivre> GetCommandeLivres(string idLivre)
+        {
+            return Dao.GetCommandeDeLivres(idLivre);
+        }
 
+        /// <summary>
+        /// Getter sur le titre du livre en cours d'utilisation
+        /// </summary>
+        /// <returns></returns>
+        public string GetTitreLivreCourant()
+        {
+            return Dao.titreLivreCourant;
+        }
+
+        /// <summary>
+        /// Getter sur l'isbn du livre en cours d'utilisation
+        /// </summary>
+        /// <returns></returns>
+        public string GetIsbnLivreCourant()
+        {
+            return Dao.isbnLivreCourant;
+        }
+
+        /// <summary>
+        /// Getter sur les étapes du suivi
+        /// </summary>
+        /// <returns></returns>
+        public List<EtapeSuivi> GetLesEtapesSuivis()
+        {
+            return Dao.GetEtapeSuivi();
+        }
+
+        /// <summary>
+        /// Méthode modifie l'état de suivi d'un livre dans la BDD
+        /// </summary>
+        /// <param name="idLivre"></param>
+        /// <param name="indexSuivi"></param>
+        public void ChangeLeSuivi(string idLivre, int indexSuivi)
+        {
+            Dao.ChangeLeSuivi(idLivre, indexSuivi);
+        }       
+    }
 }
 
