@@ -17,7 +17,7 @@ namespace Mediatek86.vue
     /// </summary>
     public partial class Authentification : Form
     {
-        private readonly ControleurAuth controleurAuth;
+        private ControleurAuth controleurAuth;
         private List<Utilisateur> liste;
 
         /// <summary>
@@ -30,6 +30,7 @@ namespace Mediatek86.vue
             InitializeComponent();
             this.controleurAuth = controleurAuth;
         }
+
         /// <summary>
         /// Rempli la listBox avec les noms des employés de la BDD
         /// </summary>

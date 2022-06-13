@@ -1363,7 +1363,8 @@ namespace Mediatek86.vue
 
             cboSuivi.Visible = false;
             lblCboSuivi.Visible = false;
-            btnValider.Visible = false;            
+            btnValider.Visible = false;
+            
         }      
 
         /// <summary>
@@ -1392,6 +1393,7 @@ namespace Mediatek86.vue
             cboSuivi.Items.Clear();
             cboSuivi.Visible = false;
             lblCboSuivi.Visible = false;
+            btnValider.Visible = false;
 
             for ( int i = 0; i < lesEtapesDeSuivi.Count; i++)
             {
@@ -1412,6 +1414,7 @@ namespace Mediatek86.vue
                 cboSuivi.Visible = true;
                 lblCboSuivi.Visible = true;
                 btnValider.Visible = true;
+
                 
 
                 ligneCouranteCommandeLivre = e.RowIndex;
@@ -1420,10 +1423,7 @@ namespace Mediatek86.vue
 
                 int numEtatDansCombo = cboSuivi.FindStringExact(etat);
                 cboSuivi.SelectedIndex = numEtatDansCombo;
-            }
-            
-
-            
+            }            
         }
         private void btnValider_Click(object sender, EventArgs e)
         {
@@ -1444,10 +1444,19 @@ namespace Mediatek86.vue
             }
         }
 
-        private void btnActualiser_Click(object sender, EventArgs e)
+        private void lblDateCommande_Click(object sender, EventArgs e)
         {
-            dgvCommandesLivres.Rows.Clear();
-            RemplirCommandeLivreListe();
+
+        }
+
+        private void lblNbExemplaires_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtbNbExemplaires_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

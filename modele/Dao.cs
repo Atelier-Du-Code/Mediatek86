@@ -369,7 +369,6 @@ namespace Mediatek86.modele
             curs.ReqSelect(req, parameters);
 
             bool bPrem = true;
-
             while (curs.Read())
             {
                 if(bPrem)
@@ -426,8 +425,8 @@ namespace Mediatek86.modele
         /// <param name="indexSuivi"></param>
         public static void ChangeLeSuivi(string idLivre, int indexSuivi)
         {
-            string req = "UPDATE commandedocument JOIN livres_dvd ON livres_dvd.id = commandedocument.id_CommandeDocument ";
-                   req += "SET commandedocument.id_suivi = @indexSuivi ";
+            string req = "UPDATE commandedocument JOIN livres_dvd ON livres_dvd.id = commandedocument.id_CommandeDocument";
+                   req += " SET commandedocument.id_suivi = @indexSuivi ";
                    req += "WHERE livres_dvd.id = @idLivre";
             
             Dictionary<string, object> parameters = new Dictionary<string, object>
@@ -439,7 +438,6 @@ namespace Mediatek86.modele
             BddMySql curs = BddMySql.GetInstance(connectionString);
             curs.ReqSelect(req, parameters);      
             curs.Close();            
-        }
-
+        }       
     }
 }
